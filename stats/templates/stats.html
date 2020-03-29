@@ -155,18 +155,16 @@ getLocation();
                     <tr>
                       <th>S. No.</th>
                       <th>Name of State / UT</th>
-                      <th>Total Confirmed cases (Indian National)</th>
-                      <th>Total Confirmed cases ( Foreign National )</th>
+                      <th>Total Confirmed cases *</th>
                       <th>Cured/Discharged/Migrated</th>
                       <th>Death</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for data in mydata %}
-                            <tr id='d{{data.0}}'>
-                              <td>{{data.0}}</td>
-                              <td id='state{{data.0}}'>{{data.1}}</td>
-                              <td>{{data.2}}</td>
+                            <tr id='d{{data.1}}'>
+                              <td>{{data.1}}</td>
+                              <td id='state{{data.1}}'>{{data.2}}</td>
                               <td>{{data.3}}</td>
                               <td>{{data.4}}</td>
                               <td>{{data.5}}</td>
