@@ -1,10 +1,8 @@
 from django.shortcuts import render
 import requests 
-from bs4 import BeautifulSoup 
-from tabulate import tabulate 
+from bs4 import BeautifulSoup
 import os 
-import numpy as np 
-import matplotlib.pyplot as plt
+import numpy as np
 extract_contents = lambda row: [x.text.replace('\n', '') for x in row] 
 URL = 'https://www.mohfw.gov.in/'
 response = requests.get(URL).content 
