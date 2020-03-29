@@ -63,6 +63,7 @@ function showPosition(position) {
       // Success!
       var data = JSON.parse(request.responseText);
       var state = data.results[0].components.state;
+      updateColour(state);
     } else if (request.status <= 500){ 
       // We reached our target server, but it returned an error
                            
@@ -83,9 +84,7 @@ function showPosition(position) {
 }
 getLocation();
 
- function checkState(st) {
-   alert(st+"  "+state)
- }
+
   // see full list of required and optional parameters:
   // https://opencagedata.com/api#forward
    // make the request
@@ -164,10 +163,9 @@ getLocation();
                   </thead>
                   <tbody>
                     {% for data in mydata %}
-                    
-                            <tr>
+                            <tr id='d{{data.0}}'>
                               <td>{{data.0}}</td>
-                              <td>{{data.1}}</td>
+                              <td id='state{{data.0}}'>{{data.1}}</td>
                               <td>{{data.2}}</td>
                               <td>{{data.3}}</td>
                               <td>{{data.4}}</td>
@@ -208,7 +206,19 @@ getLocation();
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-
+    <script>
+      function updateColour(state) {
+        var i;
+        for (i = 1; i <=27; i++) {
+          st = document.getElementById('state'+i).innerHTML;
+          if (st==state) {
+            document.getElementById('d'+i).style.backgroundColor='red';
+          }
+        }
+      }
+        
+      
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
