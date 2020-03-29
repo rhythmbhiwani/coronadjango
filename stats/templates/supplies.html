@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta http-equiv="refresh" content="10">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/gif">
+
+    <title>Get supplies near you</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+  
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <script> 
+        $.getJSON("https://api.ipify.org?format=json", function(data) { 
+        }) 
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">   </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+   if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    alert("Geolocation is not supported by this browser.");
+  }
+}, false);
+  var latitude = 0;
+  var longitude = 0;
+function showPosition(position) {
+ latitude = position.coords.latitude;
+ longitude = position.coords.longitude;
+}
+</script>
+<script>
+function getGroceries() {
+  url1 = 'https://www.google.com/maps/search/Groceries/@';
+  url2 = ',11z/data=!3m1!4b1';
+  url = url1+latitude+","+longitude+url2;
+  window.open(url, '_blank');
+}
+function getPharmacies() {
+  url1 = 'https://www.google.com/maps/search/Pharmacies/@';
+  url2 = ',11z/data=!3m1!4b1';
+  url = url1+latitude+","+longitude+url2;
+  window.open(url, '_blank');
+}
+function getFoodDelivery() {
+  url1 = 'https://www.google.com/maps/search/Food+Delivery/@';
+  url2 = ',11z/data=!3m1!4b1';
+  url = url1+latitude+","+longitude+url2;
+  window.open(url, '_blank');
+}
+function getGasStations() {
+  url1 = 'https://www.google.com/maps/search/Gas+stations/@';
+  url2 = ',11z/data=!3m1!4b1';
+  url = url1+latitude+","+longitude+url2;
+  window.open(url, '_blank');
+}
+</script>
+  </head>
+
+  <body id="page-top">
+
+     <nav class="navbar navbar-expand static-top shadow">
+
+      <a class="navbar-brand mr-1" href="{{mykey}}" style="color:#000">CoronaVirus</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars" style="color:#000"></i>
+      </button>
+
+    </nav>
+    <div id="wrapper">
+      <!-- Sidebar -->
+    <div id="wrapper">
+      <ul class="sidebar navbar-nav bg shadow ">
+        <li class="nav-item">
+          <a class="nav-link" href="{{mykey}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+        <a class="nav-link" href="{{mykey}}/stats">
+           <i class="fas fa-fw fa-user"></i>
+          <span>Get Stats</span></a>
+     </li>
+
+
+     <li class="nav-item  active-list">
+          <a class="nav-link" href="{{mykey}}/supplies">
+             <i class="fas fa-fw fa-credit-card"></i>
+            <span>Find Supplies</span></a>
+        </li>
+
+      </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{{mykey}}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Supplies</li>
+          </ol>
+
+          <button class="btn btn-primary btn-lg btn-block" onclick="getGroceries()">Groceries</button>
+          <button class="btn btn-secondary btn-lg btn-block" onclick="getPharmacies()">Pharmacies</button>
+          <button class="btn btn-success btn-lg btn-block" onclick="getFoodDelivery()">Food Delivery</button>
+          <button class="btn btn-danger btn-lg btn-block" onclick="getGasStations()">Gas stations</button>
+
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                 <span>COPYRIGHT © ESOTERIC WIZARDS | ADHOC NETWORKS</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+  
+  </div>
+  
+  </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin.min.js' %}') ?>"></script>
+
+
+  </body>
+
+</html>

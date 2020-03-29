@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta http-equiv="refresh" content="10">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'favicon.png' %}" type="image/gif">
+
+    <title>Corona Stats in INDIA</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+  
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <script> 
+        $.getJSON("https://api.ipify.org?format=json", function(data) { 
+        }) 
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">   </script>
+<script>
+  var latitude;
+  var longitude;
+  function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    alert("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+ latitude= position.coords.latitude;
+ longitude=position.coords.longitude;
+ var apikey = 'e37d731f29374e479bf16e76c4b3ae28';
+  var api_url = 'https://api.opencagedata.com/geocode/v1/json'
+  var request_url = api_url
+    + '?'
+    + 'key=' + apikey
+    + '&q=' + encodeURIComponent(latitude + ',' + longitude)
+    + '&pretty=1'
+    + '&no_annotations=1';
+
+     var request = new XMLHttpRequest();
+  request.open('GET', request_url, true);
+  request.onload = function() {
+    // see full list of possible response codes:
+    // https://opencagedata.com/api#codes
+
+    if (request.status == 200){ 
+      // Success!
+      var data = JSON.parse(request.responseText);
+      var state = data.results[0].components.state;
+    } else if (request.status <= 500){ 
+      // We reached our target server, but it returned an error
+                           
+      console.log("unable to geocode! Response code: " + request.status);
+      var data = JSON.parse(request.responseText);
+      console.log(data.status.message);
+    } else {
+      console.log("server error");
+    }
+  };
+
+  request.onerror = function() {
+    // There was a connection error of some sort
+    console.log("unable to connect to server");        
+  };
+
+  request.send(); 
+}
+getLocation();
+
+  // see full list of required and optional parameters:
+  // https://opencagedata.com/api#forward
+   // make the request
+                             
+</script>
+  </head>
+
+  <body id="page-top">
+
+     <nav class="navbar navbar-expand static-top shadow">
+
+      <a class="navbar-brand mr-1" href="{{mykey}}" style="color:#000">CoronaVirus</a>
+
+      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars" style="color:#000"></i>
+      </button>
+
+    </nav>
+    <div id="wrapper">
+      <!-- Sidebar -->
+    <div id="wrapper">
+      <ul class="sidebar navbar-nav bg shadow ">
+        <li class="nav-item">
+          <a class="nav-link" href="{{mykey}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+
+        <li class="nav-item  active-list">
+        <a class="nav-link" href="{{mykey}}/stats">
+           <i class="fas fa-fw fa-user"></i>
+          <span>Get Stats</span></a>
+     </li>
+
+
+     <li class="nav-item">
+          <a class="nav-link" href="{{mykey}}/supplies">
+             <i class="fas fa-fw fa-credit-card"></i>
+            <span>Find Supplies</span></a>
+        </li>
+
+      </ul>
+
+      <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+          <!-- Breadcrumbs-->
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="{{mykey}}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">Stats</li>
+          </ol>
+
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+              Stats</div>
+
+              
+              <div class='card-body'>
+              <div class='table-responsive'>
+                <table class='table table-bordered' id='dataTable' width='100%' cellspacing='0'>
+                  <thead>
+                    <tr>
+                      <th>S. No.</th>
+                      <th>Name of State / UT</th>
+                      <th>Total Confirmed cases (Indian National)</th>
+                      <th>Total Confirmed cases ( Foreign National )</th>
+                      <th>Cured/Discharged/Migrated</th>
+                      <th>Death</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for data in mydata %}
+                            <tr>
+                              <td>{{data.0}}</td>
+                              <td>{{data.1}}</td>
+                              <td>{{data.2}}</td>
+                              <td>{{data.3}}</td>
+                              <td>{{data.4}}</td>
+                              <td>{{data.5}}</td>
+                            </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+         
+              </div>
+            </div>
+
+
+            <div class='card-footer small text-muted'>State wise data for CoronaVirus in INDIA (Reference : <a href='https://www.mohfw.gov.in/'>https://www.mohfw.gov.in</a> )</div>
+          </div>   
+        </div>
+        <!-- /.container-fluid -->
+
+        <!-- Sticky Footer -->
+        <footer class="sticky-footer">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                 <span>COPYRIGHT © ESOTERIC WIZARDS | ADHOC NETWORKS</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+      <!-- /.content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+  
+  </div>
+  
+  </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'vendor/datatables/jquery.dataTables.js' %}"></script>
+    <script src="{% static 'vendor/datatables/dataTables.bootstrap4.js' %}"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'js/sb-admin.min.js' %}') ?>"></script>
+
+
+  </body>
+
+</html>
