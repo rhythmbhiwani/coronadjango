@@ -18,12 +18,11 @@ for row in all_rows[1:]:
 			# last row 
 			stat = ['', *stat] 
 			stats.append(stat) 
-		elif len(stat) == 6: 
+		elif len(stat) == 4: 
 			stats.append(stat) 
 
-stats[-1][1] = "Total Cases"
-
-
+totalcase = stats[-1]
+stats.remove(stats[-1]) 
 # Create your views here. 
 def index(request):
 	mylist = 'http://127.0.0.1:8000'
@@ -32,7 +31,8 @@ def index(request):
 def show_stats(request):
 	mylist = 'http://127.0.0.1:8000'
 	data = stats
-	return render(request, "stats.html", {'mykey':mylist,'mydata':data})
+	total = totalcase
+	return render(request, "stats.html", {'mykey':mylist,'mydata':data, 'maxcase':total})
 
 def show_supplies(request):
 	mylist = 'http://127.0.0.1:8000'
