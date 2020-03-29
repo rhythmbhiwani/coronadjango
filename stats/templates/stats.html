@@ -83,6 +83,9 @@ function showPosition(position) {
 }
 getLocation();
 
+ function checkState(st) {
+   alert(st+"  "+state)
+ }
   // see full list of required and optional parameters:
   // https://opencagedata.com/api#forward
    // make the request
@@ -161,6 +164,7 @@ getLocation();
                   </thead>
                   <tbody>
                     {% for data in mydata %}
+                    
                             <tr>
                               <td>{{data.0}}</td>
                               <td>{{data.1}}</td>
