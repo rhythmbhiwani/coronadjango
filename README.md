@@ -32,3 +32,8 @@ http://127.0.0.1:8000
 [Rhythm Bhiwani](https://www.linkedin.com/in/rhythm-bhiwani/)
 
 [Harsh Soni](https://github.com/24Cipher)
+
+
+## Demo Video
+
+[![Demo Video](https://img.youtube.com/vi/bEwvn06Rf1I/0.jpg)](https://www.youtube.com/watch?v=bEwvn06Rf1I)
